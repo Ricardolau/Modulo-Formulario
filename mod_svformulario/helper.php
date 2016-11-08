@@ -27,7 +27,8 @@ class modSvformularioHelper
 			$showdepartment  	     =        $params->get( 'showdepartment', '1' );
 			$showsendcopy            =        $params->get( 'showsendcopy', '1' );
 			$humantestpram           =        $params->get( 'humantestpram', '1' );
-					        
+			$showmensaje        =        $params->get( 'showmensaje', '1' );
+		        
             $department                 =       trim($_REQUEST['dept']);
             $name                       =       trim($_REQUEST['name']);
             $email                      =       trim($_REQUEST['email']);
@@ -98,6 +99,7 @@ class modSvformularioHelper
 				// Creamos el body del mensaje bien ...
 				$body = Jtext::_('MOD_SVFORMULARIO_NAME').':'.$name.'<br/>';
 				$body = $body.Jtext::_('MOD_SVFORMULARIO_TELEPHONE').':'.$phno.'<br/>';
+				$body = $body.Jtext::_('MOD_SVFORMULARIO_EMAIL').':'.$email.'<br/>';
 				$body = $body.$msg;
 				
 				// Creo que para mandar por SMTP tengo añadir usuario y contraseña 
@@ -122,12 +124,14 @@ class modSvformularioHelper
 					/*echo '<pre>';
 					print_r ($destinatario);
 					echo '</pre>';*/
-					echo Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					
+					$Kok= Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
+					$resultado['resultado'] = $Kok;
+
 				} else {
-					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
+					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSHMSG');
 					// Para añadir al array el resultado correcto.
 					$resultado['resultado'] = $ok;
+					$resultado['resultado2'] = Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
 					return $resultado;
 				}
 				

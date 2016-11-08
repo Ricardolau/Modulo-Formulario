@@ -16,6 +16,10 @@ defined('_JEXEC') or die('Restricted access');
 	$mostrartelephone =  $params->get( 'telephone', '1' );	
 	$mostrarsubject =  $params->get( 'subject', '1' );
 	$mostrarselectlopd =  $params->get( 'selectlopd', '1' );
+	$mostrarselectlopd =  $params->get( 'selectlopd', '1' );
+	$showmensaje = $params->get( 'showmensaje', '1' );
+
+
 	$textolopd  = $params->get( 'lopd', '1' );
 	$showdepartment  	     =        $params->get( 'showdepartment', '1' );
     $showsendcopy            =        $params->get( 'showsendcopy', '1' );
@@ -76,14 +80,26 @@ defined('_JEXEC') or die('Restricted access');
 			 }
 		}
 	</script>
-     <?php if  ($svform[resultado] !=='') :?>
-    <div class="resultado">
+	<?php if  (isset ($svform['resultado'])) {
+	// Texto que se muestra despues de enviar formulario antes de enviar	
+	?>
+    <div class="SVFormDespuesEnvio">
+    <h4><?php echo $svform['resultado'];?></h4>
+    <?php echo $svform['resultado2'];
+    ?>
+	
+    </div>
+    <?php } else {
+		// Texto que se muestra al mostrar formulario antes de enviar
+		?>
+		<div class="SVFormAntesEnvio">
+		<h4><?php echo JText::_('MOD_SVFORMULARIO_MENSAJE_ANTES');?></h4>
+    </div>
+	<?php
+		} ?>
     <?php
-     echo $svform[resultado];
     /* No debemos cambiar id Svformulario ya que lo utilizamod en script para controlar si
 			metio datos antes de enviar la formulario. */; ?>
-    </div>
-    <?php endif; ?>
     <div id="Svformulario">
 		<?php
 		//$app = JFactory::getDocument();
@@ -141,11 +157,17 @@ defined('_JEXEC') or die('Restricted access');
             </div>
 			<?php endif; ?>
 
-			<!-- Presentacion de Mensaje -->
+            <?php if($showmensaje =='1') {?>
+   			<!-- Presentacion de Mensaje -->
             <div class="msg">
             <label class="msg"><?php echo JText::_('MOD_SVFORMULARIO_MESSAGE'); ?></label>
             <textarea class="text" name="msg" <?php echo $estado; ?> ><?php echo $msg; ?></textarea>
             </div>
+            <?php } else { ?>
+			<textarea style="display:none" class="text" name="msg" disabled ><?php echo ' Sin activar mensaje en configuracion ';?></textarea>
+	
+			<?php } ?>
+
 
 			<?php if($mostrarselectlopd=='1') : ?>
 			<!-- Presentacion de Lopd -->

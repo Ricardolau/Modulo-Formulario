@@ -75,6 +75,16 @@
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
+				<field 
+				name="showmensaje" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_LMENSAJE" 
+				description="MOD_SVFORMULARIO_LMENSAJE">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
 								
 				<field 
 				name="sales_address"
