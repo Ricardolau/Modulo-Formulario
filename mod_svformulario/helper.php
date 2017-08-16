@@ -27,14 +27,28 @@ class modSvformularioHelper
 			$showdepartment  	     =        $params->get( 'showdepartment', '1' );
 			$showsendcopy            =        $params->get( 'showsendcopy', '1' );
 			$humantestpram           =        $params->get( 'humantestpram', '1' );
-			$showmensaje        =        $params->get( 'showmensaje', '1' );
-		        
-            $department                 =       trim($_REQUEST['dept']);
+			
+			$department                 =       trim($_REQUEST['dept']);
             $name                       =       trim($_REQUEST['name']);
-            $email                      =       trim($_REQUEST['email']);
-            $phno                       =       trim($_REQUEST['phno']);
+            //~ $email                      =       trim($_REQUEST['email']);
+            //~ $phno                       =       trim($_REQUEST['phno']);
             $subject                    =       trim($_REQUEST['subject']);
             $msg                        =       trim($_REQUEST['msg']);
+			// Saneamos posible resultado.
+			$exp_telefono = '/^[6-9][0-9]{8}$/';
+			$exp_email = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+			
+			if(preg_match($exp_telefono, $_REQUEST['phno']))
+			{ // Si es correcto telefono
+				$phno = trim($_REQUEST['phno']);
+				
+			}
+			if(preg_match($exp_email, $_REQUEST['email']))
+			{ // Si es correcto email
+				$email= trim($_REQUEST['email']);
+				
+			}
+			
 			
 			// Creo array para devolver resultado
 			$resultado = array() ;
@@ -99,7 +113,6 @@ class modSvformularioHelper
 				// Creamos el body del mensaje bien ...
 				$body = Jtext::_('MOD_SVFORMULARIO_NAME').':'.$name.'<br/>';
 				$body = $body.Jtext::_('MOD_SVFORMULARIO_TELEPHONE').':'.$phno.'<br/>';
-				$body = $body.Jtext::_('MOD_SVFORMULARIO_EMAIL').':'.$email.'<br/>';
 				$body = $body.$msg;
 				
 				// Creo que para mandar por SMTP tengo añadir usuario y contraseña 
@@ -124,14 +137,12 @@ class modSvformularioHelper
 					/*echo '<pre>';
 					print_r ($destinatario);
 					echo '</pre>';*/
-					$Kok= Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					$resultado['resultado'] = $Kok;
-
+					echo Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
+					
 				} else {
-					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSHMSG');
+					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
 					// Para añadir al array el resultado correcto.
 					$resultado['resultado'] = $ok;
-					$resultado['resultado2'] = Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
 					return $resultado;
 				}
 				

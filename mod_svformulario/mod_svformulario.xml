@@ -26,7 +26,8 @@
 		<language tag="es-ES">es-ES/es-ES.mod_svformulario.sys.ini</language> 
 		<language tag="en-GB">en-GB/en-GB.mod_svformulario.ini</language>
 		<language tag="en-GB">en-GB/en-GB.mod_svformulario.sys.ini</language> 
-
+		<language tag="gl-ES">gl-ES/gl-ES.mod_svformulario.ini</language>
+		<language tag="gl-ES">gl-ES/gl-ES.mod_svformulario.sys.ini</language> 
     </languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_LOGIN" />
 	<config>
@@ -61,8 +62,8 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSUBJECT" 
 				description="MOD_SVFORMULARIO_LSUBJECT">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 								
 				<field 
@@ -72,20 +73,21 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LDEPARTMENT" 
 				description="MOD_SVFORMULARIO_DDEPARTMENT">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
+				
 				<field 
-				name="showmensaje" 
-				type="radio" 
+-				name="showmensaje" 
+				type="radio"
 				class="btn-group btn-group-yesno"
 				default="1" 
 				label="MOD_SVFORMULARIO_LMENSAJE" 
 				description="MOD_SVFORMULARIO_LMENSAJE">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
-				</field>
-								
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>				
+							
 				<field 
 				name="sales_address"
 				type="text" 
@@ -93,7 +95,7 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LSALES" 
 				description="MOD_SVFORMULARIO_DSALES" />
-				
+						
 				<field 
 				name="support_address" 
 				type="text" 
@@ -101,7 +103,7 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LSUPPORT" 
 				description="MOD_SVFORMULARIO_DSUPPORT" />
-            
+						
 				<field 
 				name="billing_address" 
 				type="text" 
@@ -109,8 +111,7 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LBILLING" 
 				description="MOD_SVFORMULARIO_DBILLING"/>
-		    
-				
+						
 				<field 
 				name="showsendcopy" 
 				type="radio" 
@@ -118,10 +119,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSELFCOPY" 
 				description="MOD_SVFORMULARIO_LSELFCOPY">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
-				
+						
 				<field 
 				name="humantestpram" 
 				type="radio" 
@@ -129,10 +130,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LHUMANTEST" 
 				description="MOD_SVFORMULARIO_DHUMANTEST">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
-				
+						
 				<field 
 				name="selectlopd" 
 				type="radio" 
@@ -140,10 +141,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSELECTLOPD" 
 				description="MOD_SVFORMULARIO_DSLELECTLOPD">
-			    <option value="1">JYES</option>
-			    <option value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
-				
+						
 				<field 
 				name="lopd" 
 				type="textarea" 

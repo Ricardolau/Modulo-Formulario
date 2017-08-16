@@ -18,9 +18,15 @@ defined('_JEXEC') or die('Restricted access');
 	$mostrarselectlopd =  $params->get( 'selectlopd', '1' );
 	$mostrarselectlopd =  $params->get( 'selectlopd', '1' );
 	$showmensaje = $params->get( 'showmensaje', '1' );
-
-
 	$textolopd  = $params->get( 'lopd', '1' );
+	// Ahora comprobamos que textlopd no este vacio ( espacios ) si es así
+	// metemos los datos de la constante idioma.. MOD_SVFORMULARIO_LOPD
+	if (trim($textolopd)== ''){
+		$textolopd  = 	JText::_('MOD_SVFORMULARIO_LOPD');
+	
+	}
+	
+	
 	$showdepartment  	     =        $params->get( 'showdepartment', '1' );
     $showsendcopy            =        $params->get( 'showsendcopy', '1' );
     $humantestpram           =        $params->get( 'humantestpram', '1' );
@@ -119,7 +125,8 @@ defined('_JEXEC') or die('Restricted access');
 		}
 		?>
 		<form name="Svformulario" id="form" method="post" action="<?php $_SERVER['PHP_SELF']?>" onsubmit="return validar(this)">
-            <?php if($showdepartment=='1') : ?>
+            <?php // El departamento no esta desactivado al enviar.. 
+            if($showdepartment=='1') : ?>
               <div class="department">
               <label><?php echo JText::_('MOD_SVFORMULARIO_DEPARTMENT'); ?></label>
               <select name="dept" class="text">
@@ -168,7 +175,6 @@ defined('_JEXEC') or die('Restricted access');
 	
 			<?php } ?>
 
-
 			<?php if($mostrarselectlopd=='1') : ?>
 			<!-- Presentacion de Lopd -->
 				<div class="lopd">
@@ -198,7 +204,7 @@ defined('_JEXEC') or die('Restricted access');
 			}	?>
             
             
-            <div class ="enviar"></div>
+            <div class ="enviar">
                 <input type="submit" name="submit" value="<?php echo JText::_('MOD_SVFORMULARIO_SUBMIT'); ?>" id="submit" <?php echo $estado; ?>/>
            </div>
               
