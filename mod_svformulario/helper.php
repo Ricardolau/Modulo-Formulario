@@ -16,58 +16,145 @@ class modSvformularioHelper
 {
 	static function preLoadprocess(&$params)
 	{
-         
-			if($_POST)
-			{
+		// resultado es para devolver parametros.
+		$resultado = array() ;
+		// Array [show] los que selecionamos que se muestra. valor es 1-> Si se muestra .. 0-> No se muestra.
+		$resultado['show']['nombre'] = $params->get( 'nombre', '1' );
+		$resultado['show']['telefono'] = $params->get( 'telephone', '1' );
+		$resultado['show']['asunto'] = $params->get( 'subject', '1' );
+		$resultado['show']['departamentos'] = $params->get( 'showdepartment', '1' );
+		$resultado['show']['copy'] = $params->get( 'showsendcopy', '1' );
+		$resultado['show']['captcha'] = $params->get( 'humantestpram', '1' );
+		if ($resultado['show']['departamentos'] === 1) {
+			// Array a quien mandamos email.
+			$resultado['to']['ventas']	=	$params->get( 'sales_address', 'info@solucionesvigo.es' );
+			$resultado['to']['ayuda']	=	$params->get( 'support_address', 'support@yourdomain.com' );
+			$resultado['to']['facturacion']	=	$params->get( 'billing_address', 'billing@yourdomain.com' );
+		}
+		// Array [obligatorio] los que seleccionamos como obligatorios.
+		$resultado['obligatorio']['nombre'] = $params->get( 'Ob_nombre', '1' );
+		$resultado['obligatorio']['telefono'] = $params->get( 'Ob_telephone', '1' );
+		$resultado['obligatorio']['email'] = $params->get( 'Ob_email', '1' );
+		$resultado['obligatorio']['asunto'] = $params->get( 'Ob_subject', '1' );
+		if ($params->get('filtroActivos','0') === '1' ){
+			$filtros = $params->get('filtroGeneral');
+			$resultado['filtros'] = explode(';',$filtros);
+		}
+		
+		
+		return $resultado;
+	}
+	static function obtenerDatos($show,$obligatorio)
+	{
+		
 			/* Debería entrar solo si hay envio ...*/
-			// Tomamos datos de parametros. 
-			$mostrarnombre =  $params->get( 'nombre', '1' );
-			$mostrartelephone =  $params->get( 'telephone', '1' );	
-			$mostrarsubject =  $params->get( 'subject', '1' );
-			$showdepartment  	     =        $params->get( 'showdepartment', '1' );
-			$showsendcopy            =        $params->get( 'showsendcopy', '1' );
-			$humantestpram           =        $params->get( 'humantestpram', '1' );
-			
-			$department                 =       trim($_REQUEST['dept']);
-            $name                       =       trim($_REQUEST['name']);
-            //~ $email                      =       trim($_REQUEST['email']);
-            //~ $phno                       =       trim($_REQUEST['phno']);
-            $subject                    =       trim($_REQUEST['subject']);
-            $msg                        =       trim($_REQUEST['msg']);
 			// Saneamos posible resultado.
+			$resultado = array();
+			// Expresion regular para controlar email y telefono.
 			$exp_telefono = '/^[6-9][0-9]{8}$/';
-			$exp_email = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-			
+			$exp_email = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/";
 			if(preg_match($exp_telefono, $_REQUEST['phno']))
 			{ // Si es correcto telefono
 				$phno = trim($_REQUEST['phno']);
-				
+			} else {
+				$phno='';
 			}
 			if(preg_match($exp_email, $_REQUEST['email']))
 			{ // Si es correcto email
 				$email= trim($_REQUEST['email']);
+			} else {
+				$email = '';
+			}
+	
+	
+	
+	
+			
+		    // El resto de campo los limpiamos de etiquetas y caracteres especiales.
+		    $department                 =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['dept']));
+            $name                       =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['name']));
+            $subject                    =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['subject']));
+            $msg                        =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '',strip_tags($_REQUEST['msg']));
+			
+			// Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
+			switch (true) {
+				case ($obligatorio['nombre'] === 1):
+					// Quiere decir que es obligatorio el nombre
+					if ( strlen($name) === 0 ){
+						$resultado['error']['name'] = 'Error nombre';
+					}
 				
+				
+				case ($obligatorio['telefono'] === 1):
+					// Quiere decir que es obligatorio el telefono
+					if ( strlen($phno) === 0 ){
+						$resultado['error']['phno'] = 'Error telefono';
+					}
+
+				
+				case ($obligatorio['email'] === 1 ):
+					// Quiere decir que es obligatorio el email
+					if ( strlen($email) === 0 ){
+						$resultado['error']['email'] = 'Error email';
+					}
+					
+				
+				case ($obligatorio['asunto'] === 1):
+					// Quiere decir que es obligatorio el asunto
+					if ( strlen($subject) === 0 ){
+						$resultado['error']['subject'] = 'Error asunto';
+					}
 			}
 			
+			if (!isset($resultado['error'])) {
+				// Creo array para devolver resultado ya que no hay errores
+				$resultado['mensaje'] = array('Svdepartment' => $department,
+												'name'=> $name,
+												'email' => $email,
+												'phno' => $phno,
+												'subject' => $subject,
+												'msg' => $msg								
+												);
+			}
 			
-			// Creo array para devolver resultado
-			$resultado = array() ;
-			$resultado = array('Svdepartment' => $department,
-								'name'=> $name,
-								'email' => $email,
-								'phno' => $phno,
-								'subject' => $subject,
-								'msg' => $msg								
-								);
-			
-			 
+			return $resultado;
+	}	 
  
-			/* Aquí tomamos datos de a email ( departamento) enviamos email...
-			 * si no mostramos departamentos ¿ A quien enviamos ? */
+	static function aplicarFiltros($datos,$filtros) {
+		// Aplicamos filtros.
+		$resultado = '';
+		$busqueda= array();
+		foreach ($filtros as $filtro) {
+			$busqueda[1] = strpos($datos['name'], $filtro);
+			$busqueda[2] = strpos($datos['email'], $filtro);
+			$busqueda[3] = strpos($datos['phno'], $filtro);
+			$busqueda[4] = strpos($datos['msg'], $filtro);
+			$busqueda[5] = strpos($datos['subject'], $filtro);
+			for ($i = 1; $i <= 5; $i++) {
+				if ($busqueda[$i] != false){
+				// Encontro palabra del filtro en contenido, se cancela todo.
+				$resultado = ' Filtro de palabra - '.$filtro;
+				break;
+				}
+			}
+			if ($resultado !=''){
+				// No continuo buscando, devuelvo error.
+				break;
+			}
+			// Si tiene numero es que entro, si es false es que no lo encontro..
 			
-            $sales_address              =       $params->get( 'sales_address', 'info@solucionesvigo.es' );
-            $support_address            =       $params->get( 'support_address', 'support@yourdomain.com' );
-            $billing_address            =       $params->get( 'billing_address', 'billing@yourdomain.com' );
+		}
+		if ($resultado === ''){
+			$resultado = 'Correcto';
+		}
+		return $resultado;
+	}
+ 
+ 
+	static function enviarEmail($show) 
+	{
+		
+            
             
             
             $selfcopy                   =       isset($_REQUEST['selfcopy']) ? $_REQUEST['selfcopy'] : "";
@@ -132,22 +219,27 @@ class modSvformularioHelper
 				$mail->setSender(array($mailfrom, $fromname));
 				$mail->setSubject($subject);
 				$mail->setBody($body);
-				$sent = $mail->Send();
-				if ( $sent !== true ) {
-					/*echo '<pre>';
-					print_r ($destinatario);
-					echo '</pre>';*/
-					echo Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					
-				} else {
-					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
-					// Para añadir al array el resultado correcto.
-					$resultado['resultado'] = $ok;
-					return $resultado;
-				}
+				
+				
+				// Envio de email
+				//~ $sent = $mail->Send();
+				//~ // Contestación de envio.
+				//~ if ( $sent !== true ) {
+					//~ /*echo '<pre>';
+					//~ print_r ($destinatario);
+					//~ echo '</pre>';*/
+					//~ echo Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
+					//~ 
+				//~ } else {
+					//~ $ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
+					//~ // Para añadir al array el resultado correcto.
+					//~ $resultado['resultado'] = $ok;
+				//~ }
 				
 			}
-		}
+			
+		
+		return $resultado;
     }
 }
 

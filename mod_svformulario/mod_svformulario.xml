@@ -62,8 +62,8 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSUBJECT" 
 				description="MOD_SVFORMULARIO_LSUBJECT">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
 				</field>
 								
 				<field 
@@ -73,21 +73,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LDEPARTMENT" 
 				description="MOD_SVFORMULARIO_DDEPARTMENT">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
--				name="showmensaje" 
-				type="radio"
-				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LMENSAJE" 
-				description="MOD_SVFORMULARIO_LMENSAJE">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>				
-							
+								
 				<field 
 				name="sales_address"
 				type="text" 
@@ -95,7 +84,7 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LSALES" 
 				description="MOD_SVFORMULARIO_DSALES" />
-						
+				
 				<field 
 				name="support_address" 
 				type="text" 
@@ -103,7 +92,7 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LSUPPORT" 
 				description="MOD_SVFORMULARIO_DSUPPORT" />
-						
+            
 				<field 
 				name="billing_address" 
 				type="text" 
@@ -111,7 +100,8 @@
 				size="50" 
 				label="MOD_SVFORMULARIO_LBILLING" 
 				description="MOD_SVFORMULARIO_DBILLING"/>
-						
+		    
+				
 				<field 
 				name="showsendcopy" 
 				type="radio" 
@@ -119,10 +109,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSELFCOPY" 
 				description="MOD_SVFORMULARIO_LSELFCOPY">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
 				</field>
-						
+				
 				<field 
 				name="humantestpram" 
 				type="radio" 
@@ -130,10 +120,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LHUMANTEST" 
 				description="MOD_SVFORMULARIO_DHUMANTEST">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
 				</field>
-						
+				
 				<field 
 				name="selectlopd" 
 				type="radio" 
@@ -141,10 +131,10 @@
 				default="1" 
 				label="MOD_SVFORMULARIO_LSELECTLOPD" 
 				description="MOD_SVFORMULARIO_DSLELECTLOPD">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
 				</field>
-						
+				
 				<field 
 				name="lopd" 
 				type="textarea" 
@@ -155,6 +145,74 @@
 				
 
 			</fieldset>
+			<fieldset name="CamposObligatorios">
+				<field 
+				name="Ob_nombre" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_OB_LNAME" 
+				description="MOD_SVFORMULARIO_OB_DNAME">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+				
+				<field 
+				name="Ob_telephone" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_OB_LTELEPHONE" 
+				description="MOD_SVFORMULARIO_OB_DTELEPHONE">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+				<field 
+				name="Ob_email" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_OB_LEMAIL" 
+				description="MOD_SVFORMULARIO_OB_DEMAIL">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+				
+				<field 
+				name="Ob_subject" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_OB_LSUBJECT" 
+				description="MOD_SVFORMULARIO_OB_DSUBJECT">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+								
+				
+			</fieldset>
+			
+			<fieldset name="FiltrosEnvios">
+				<field 
+				name="filtroActivos" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="0" 
+				label="MOD_SVFORMULARIO_LFILTROS" 
+				description="MOD_SVFORMULARIO_DFILTROS">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+				<field 
+				name="filtroGeneral" 
+				type="textarea" 
+				default=""
+				label="MOD_SVFORMULARIO_LFILTROGENERAL" 
+				description="MOD_SVFORMULARIO_DFILTROGENERAL"/>
+				
+			
+			</fieldset>
+
 			<fieldset
 				name="advanced">
 				<field
