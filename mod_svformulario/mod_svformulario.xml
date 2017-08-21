@@ -39,7 +39,17 @@
 				class="btn-group btn-group-yesno"
 				default="1" 
 				label="MOD_SVFORMULARIO_LNAME" 
-				description="MOD_SVFORMULARIO_LNAME">
+				description="MOD_SVFORMULARIO_DNAME">
+			    <option value="1">JYES</option>
+			    <option value="0">JNO</option>
+				</field>
+				<field 
+				name="email" 
+				type="radio" 
+				class="btn-group btn-group-yesno"
+				default="1" 
+				label="MOD_SVFORMULARIO_LEMAIL" 
+				description="MOD_SVFORMULARIO_DEMAIL">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
@@ -50,7 +60,7 @@
 				class="btn-group btn-group-yesno"
 				default="1" 
 				label="MOD_SVFORMULARIO_LTELEPHONE" 
-				description="MOD_SVFORMULARIO_LTELEPHONE">
+				description="MOD_SVFORMULARIO_DTELEPHONE">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
@@ -61,7 +71,7 @@
 				class="btn-group btn-group-yesno"
 				default="1" 
 				label="MOD_SVFORMULARIO_LSUBJECT" 
-				description="MOD_SVFORMULARIO_LSUBJECT">
+				description="MOD_SVFORMULARIO_DSUBJECT">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>

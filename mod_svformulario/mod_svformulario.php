@@ -19,10 +19,10 @@ $params->def('greeting', 1);
     if ($_POST) {
 		// Cambiamos de layout
 		$layout .= '_respuesta';
-
 		// Cargamos valore de enviados.
 		
-		$datos= modSvformularioHelper::obtenerDatos($svform['show'],$svform['obligatorio']);
+		$datos= modSvformularioHelper::obtenerDatos($svform['show'],$svform['obligatorio'],$svform['to']);
+		// Quiere decir que  no hay errores a la ahora obtener datos POST
 		if (!isset($datos['error'])){
 			if (isset($svform['filtros'])) {
 			// Quiere decir que no hay errores y hay filtros que comprobar
@@ -31,13 +31,11 @@ $params->def('greeting', 1);
 				// Quiere decir que no tiene ativado lo filtros.. por lo que lo ponemos correcto
 				$res_filtro = 'Correcto';
 			}
-		}
-		if (!isset($datos['error']) && ($res_filtro === 'Correcto')) {
+			if ($res_filtro === 'Correcto') {
 			// Quiere decir que es todo correcto, por lo que enviamos.
-			$res_envio = modSvformularioHelper::enviarEmail($datos);
-		}
-		
-		
+			$res_envio = modSvformularioHelper::enviarEmail($datos['mensaje'],$svform['to'],$module->title);
+			}
+		}		
 		
 	}
 	require JModuleHelper::getLayoutPath('mod_svformulario', $layout);

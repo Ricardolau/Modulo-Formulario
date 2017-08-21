@@ -59,10 +59,7 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
      <div id="Svformulario">
-		<?php
-		$estado = ' required';
 		
-		?>
 		<form name="Svformulario" id="form" method="post" action="<?php $_SERVER['PHP_SELF']?>" onsubmit="return validar(this)">
             <!-- Presentadicon de department -->
             <?php if ($svform['show']['departamentos'] === '1') : ?>
@@ -79,28 +76,29 @@ defined('_JEXEC') or die('Restricted access');
             <?php if ($svform['show']['nombre'] === '1') : ?>
             <div class="name">
             <label class="name"><?php echo JText::_('MOD_SVFORMULARIO_NAME'); ?></label>
-            <input class="text" name="name" type="text" value="<?php echo $name; ?>" <?php echo $estado; ?> />
+            
+            <input class="text" name="name" type="text" value="<?php echo $name; ?>" <?php echo ($svform['obligatorio']['nombre'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de email -->
             <?php if ($svform['show']['email'] === '1') : ?>
             <div class="email">
             <label class="email"><?php echo JText::_('MOD_SVFORMULARIO_EMAIL'); ?></label>
-            <input class="text" name="email" type="text" value="<?php echo $email; ?>" <?php echo $estado; ?> />
+            <input class="text" name="email" type="text" value="<?php echo $email; ?>" <?php echo ($svform['obligatorio']['email'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de telefono -->
             <?php if ($svform['show']['telefono'] === '1') : ?>
             <div class="phno">
             <label class="phno"><?php echo JText::_('MOD_SVFORMULARIO_TELEPHONE'); ?></label>
-            <input class="text" name="phno" type="text" value="<?php echo $phno; ?>" pattern="[0-9]{9}" <?php echo $estado; ?> />
+            <input class="text" name="phno" type="text" value="<?php echo $phno; ?>" pattern="[0-9]{9}"<?php echo ($svform['obligatorio']['telefono'] === '1') ? 'required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de asunto -->
             <?php if ($svform['show']['asunto'] === '1') : ?>
 			<div class="subject">
             <label class="subject"><?php echo JText::_('MOD_SVFORMULARIO_SUBJECT'); ?></label>
-            <input class="text" name="subject" type="text" value="<?php echo $subject; ?>" <?php echo $estado; ?> />
+            <input class="text" name="subject" type="text" value="<?php echo $subject; ?>" <?php echo ($svform['obligatorio']['asunto'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de Mensaje -->
@@ -111,30 +109,28 @@ defined('_JEXEC') or die('Restricted access');
 			<!-- Presentacion de Lopd -->
             <?php if ($svform['show']['lopd'] === '1') : ?>
 				<div class="lopd">
-                 <label class="lopd"><?php echo $textolopd; ?></label>
+                 <label class="lopd"><?php echo $svform['textos']['lopd']; ?></label>
                 </div>
             <?php endif; ?>
  
  
             <?php
-             if  ($svform[resultado] ==''){
-				 if($showsendcopy=='1') : ?>
-				<!-- Presentacion de Envio de Copia -->
-					<div class="checkbox">
-					<input type="checkbox" name="selfcopy" <?php if($selfcopy == "yes") echo "checked='checked'"; ?> value="yes" />
-					<label><?php echo JText::_('MOD_SVFORMULARIO_SELFCOPY'); ?></label>
-					</div>
-				<?php endif; ?>
-				<?php if($humantestpram=='1') : ?>
-				<!-- Presentacion de Control de Spam -->
-				<div class="humantest">
-					<label for='message'><?php echo JText::_('MOD_SVFORMULARIO_HUMANTEST'); ?></label>
-					<?php echo '<b>'.$varone.'+'.$vartwo.'=</b>'; ?>
-					<input id="human_test" name="human_test" size="3" type="text" class="text">
-					<input type="hidden" id="sum_test" name="sum_test" value="<?php echo $sum_rand; ?>" />
+			 if($svform['show']['copy'] ==='1') : ?>
+			<!-- Presentacion de Envio de Copia -->
+				<div class="checkbox">
+				<input type="checkbox" name="selfcopy" <?php if($selfcopy == "yes") echo "checked='checked'"; ?> value="yes" />
+				<label><?php echo JText::_('MOD_SVFORMULARIO_SELFCOPY'); ?></label>
 				</div>
-				<?php endif; 
-			}	?>
+			<?php endif; ?>
+			<?php if($svform['show']['captcha'] ==='1') : ?>
+			<!-- Presentacion de Control de Spam -->
+			<div class="humantest">
+				<label for='message'><?php echo JText::_('MOD_SVFORMULARIO_HUMANTEST'); ?></label>
+				<?php echo '<b>'.$varone.'+'.$vartwo.'=</b>'; ?>
+				<input id="human_test" name="human_test" size="3" type="text" class="text">
+				<input type="hidden" id="sum_test" name="sum_test" value="<?php echo $sum_rand; ?>" />
+			</div>
+			<?php endif; ?>
             
             
             <div class ="enviar">
