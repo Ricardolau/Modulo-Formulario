@@ -197,7 +197,7 @@
 				name="filtroActivos" 
 				type="radio" 
 				class="btn-group btn-group-yesno"
-				default="0" 
+				default="1" 
 				label="MOD_SVFORMULARIO_LFILTROS" 
 				description="MOD_SVFORMULARIO_DFILTROS">
 			    <option value="1">JYES</option>

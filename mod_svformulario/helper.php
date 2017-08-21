@@ -25,6 +25,8 @@ class modSvformularioHelper
 		$resultado['show']['departamentos'] = $params->get( 'showdepartment', '1' );
 		$resultado['show']['copy'] = $params->get( 'showsendcopy', '1' );
 		$resultado['show']['captcha'] = $params->get( 'humantestpram', '1' );
+		$resultado['show']['lopd'] = $params->get( 'selectlopd', '1' );
+
 		if ($resultado['show']['departamentos'] === 1) {
 			// Array a quien mandamos email.
 			$resultado['to']['ventas']	=	$params->get( 'sales_address', 'info@solucionesvigo.es' );
@@ -40,15 +42,16 @@ class modSvformularioHelper
 			$filtros = $params->get('filtroGeneral');
 			$resultado['filtros'] = explode(';',$filtros);
 		}
-		
+		if ( $resultado['show']['lopd'] === '1'){
+			// Tengo que obtener texto que puso en parametros o los textos por defectos de idiomas... según..
+			$resultado['textos']['lopd'] = $params->get( 'lopd');
+		}
 		
 		return $resultado;
 	}
 	static function obtenerDatos($show,$obligatorio)
 	{
-		
-			/* Debería entrar solo si hay envio ...*/
-			// Saneamos posible resultado.
+		/* Obtenemos datos y saneamos posibles errores. */
 			$resultado = array();
 			// Expresion regular para controlar email y telefono.
 			$exp_telefono = '/^[6-9][0-9]{8}$/';
@@ -59,52 +62,50 @@ class modSvformularioHelper
 			} else {
 				$phno='';
 			}
-			if(preg_match($exp_email, $_REQUEST['email']))
+			if(preg_match($exp_email, mb_strtolower($_REQUEST['email'])))
 			{ // Si es correcto email
 				$email= trim($_REQUEST['email']);
 			} else {
 				$email = '';
 			}
-	
-	
-	
-	
-			
 		    // El resto de campo los limpiamos de etiquetas y caracteres especiales.
 		    $department                 =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['dept']));
-            $name                       =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['name']));
-            $subject                    =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['subject']));
+            $name                       =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['name']));
+            $subject                    =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['subject']));
             $msg                        =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '',strip_tags($_REQUEST['msg']));
 			
 			// Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
 			switch (true) {
-				case ($obligatorio['nombre'] === 1):
+				case ($obligatorio['nombre'] === '1'):
 					// Quiere decir que es obligatorio el nombre
 					if ( strlen($name) === 0 ){
 						$resultado['error']['name'] = 'Error nombre';
 					}
 				
 				
-				case ($obligatorio['telefono'] === 1):
+				case ($obligatorio['telefono'] === '1'):
 					// Quiere decir que es obligatorio el telefono
 					if ( strlen($phno) === 0 ){
 						$resultado['error']['phno'] = 'Error telefono';
 					}
 
 				
-				case ($obligatorio['email'] === 1 ):
+				case ($obligatorio['email'] === '1' ):
 					// Quiere decir que es obligatorio el email
 					if ( strlen($email) === 0 ){
 						$resultado['error']['email'] = 'Error email';
 					}
 					
 				
-				case ($obligatorio['asunto'] === 1):
+				case ($obligatorio['asunto'] === '1'):
 					// Quiere decir que es obligatorio el asunto
 					if ( strlen($subject) === 0 ){
 						$resultado['error']['subject'] = 'Error asunto';
 					}
+				
 			}
+			
+			
 			
 			if (!isset($resultado['error'])) {
 				// Creo array para devolver resultado ya que no hay errores
@@ -115,6 +116,12 @@ class modSvformularioHelper
 												'subject' => $subject,
 												'msg' => $msg								
 												);
+				if ($show['copy'] === '1'){
+					// Quiere decir que es muestra botton de marcar SI/NO enviar copia uno mismo.
+					if (isset($_REQUEST['selfcopy'])){
+						$resultado['mensaje']['copia'] = $_REQUEST['selfcopy'];
+					} 
+				} 
 			}
 			
 			return $resultado;
@@ -151,13 +158,12 @@ class modSvformularioHelper
 	}
  
  
-	static function enviarEmail($show) 
+	static function enviarEmail($datos) 
 	{
 		
             
             
             
-            $selfcopy                   =       isset($_REQUEST['selfcopy']) ? $_REQUEST['selfcopy'] : "";
             
             
 

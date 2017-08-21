@@ -11,54 +11,12 @@
 * -------------------------------------------------------------------------*/
 
 defined('_JEXEC') or die('Restricted access');
-	
-	
 	echo '<pre>';
+	print_r ($module->title);
 	print_r($svform);
-	print_r($res_filtro);
 	echo '</pre>';
-	// Creamos variables de parametros de modulo
-	$mostrarnombre =  $params->get( 'nombre', '1' );
-	$mostrartelephone =  $params->get( 'telephone', '1' );	
-	$mostrarsubject =  $params->get( 'subject', '1' );
-	$mostrarselectlopd =  $params->get( 'selectlopd', '1' );
-	$textolopd  = $params->get( 'lopd', '1' );
-	// Ahora comprobamos que textlopd no este vacio ( espacios ) si es así
-	// metemos los datos de la constante idioma.. MOD_SVFORMULARIO_LOPD
-	if (trim($textolopd)== ''){
-		$textolopd  = 	JText::_('MOD_SVFORMULARIO_LOPD');
-	
-	}
-	
-	
-	$showdepartment  	     =        $params->get( 'showdepartment', '1' );
-    $showsendcopy            =        $params->get( 'showsendcopy', '1' );
-    $humantestpram           =        $params->get( 'humantestpram', '1' );
-	$sales_address           =        $params->get( 'sales_address', 'sales@yourdomain.com' );
-    $support_address         =        $params->get( 'support_address', 'support@yourdomain.com' );
-    $billing_address         =        $params->get( 'billing_address', 'billing@yourdomain.com' );
-    if  ($svform[resultado] ==''){
-    $name                    =        '';
-    $email                   =        '';
-    $phno                    =        '';
-    $subject                 =        '';
-    $msg                     =        '';
-   
-	} else {
-	$name                    =     $svform[name];
-    $email                   =     $svform[email];
-    $phno                    =     $svform[phno];
-    $subject                 =     $svform[subject];
-    $msg                     =     $svform[msg];	
-		
-	}
-	$selfcopy                =        '';
-    $varone                  =        rand(5, 15);
-    $vartwo                  =        rand(5, 15);
-    $sum_rand                =        $varone+$vartwo;
-
 ?>
-    <link rel="stylesheet" href="modules/mod_svformulario/tmpl/lib/svformulario.css" media="screen" />
+ <link rel="stylesheet" href="modules/mod_svformulario/tmpl/lib/svformulario.css" media="screen" />
   
     <script type="text/javascript">
 				
@@ -90,35 +48,24 @@ defined('_JEXEC') or die('Restricted access');
 			 }
 		}
 	</script>
-     <?php if  ($svform[resultado] !=='') :?>
-    <div class="resultado">
-    <?php
-     echo $svform[resultado];
-    /* No debemos cambiar id Svformulario ya que lo utilizamod en script para controlar si
-			metio datos antes de enviar la formulario. */; ?>
-    </div>
-    <?php endif; ?>
-    <div id="Svformulario">
+<?php
+	// Creamos variables de parametros de modulo
+	$selfcopy                =        '';
+    $varone                  =        rand(5, 15);
+    $vartwo                  =        rand(5, 15);
+    $sum_rand                =        $varone+$vartwo;
+	
+	
+
+?>
+     <div id="Svformulario">
 		<?php
-		//$app = JFactory::getDocument();
-		/*echo '<pre>';
-		print_r ($module->title);
-		echo '</pre>';
-		* los campos del formulario si le ponemos disabled quedan dehabilitados, 
-		* por lo que si el formulario ya fue envía entonces deberíamos sustituir
-		* required por disabled
-		* Y hay campos que no se deberían mostrar, como
-		* copia y control spam 
-		* */
-		if ($svform[resultado] ==''){
-			$estado = ' required';
-		}else{
-			$estado = ' disabled';
-		}
+		$estado = ' required';
+		
 		?>
 		<form name="Svformulario" id="form" method="post" action="<?php $_SERVER['PHP_SELF']?>" onsubmit="return validar(this)">
-            <?php // El departamento no esta desactivado al enviar.. 
-            if($showdepartment=='1') : ?>
+            <!-- Presentadicon de department -->
+            <?php if ($svform['show']['departamentos'] === '1') : ?>
               <div class="department">
               <label><?php echo JText::_('MOD_SVFORMULARIO_DEPARTMENT'); ?></label>
               <select name="dept" class="text">
@@ -128,42 +75,41 @@ defined('_JEXEC') or die('Restricted access');
               </select>
               </div>
             <?php endif; ?>
-            <?php if($mostrarnombre=='1') : ?>
             <!-- Presentacion de nombre -->
+            <?php if ($svform['show']['nombre'] === '1') : ?>
             <div class="name">
             <label class="name"><?php echo JText::_('MOD_SVFORMULARIO_NAME'); ?></label>
             <input class="text" name="name" type="text" value="<?php echo $name; ?>" <?php echo $estado; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de email -->
+            <?php if ($svform['show']['email'] === '1') : ?>
             <div class="email">
             <label class="email"><?php echo JText::_('MOD_SVFORMULARIO_EMAIL'); ?></label>
             <input class="text" name="email" type="text" value="<?php echo $email; ?>" <?php echo $estado; ?> />
             </div>
-            <?php if($mostrartelephone=='1') : ?>
+			<?php endif; ?>
 			<!-- Presentacion de telefono -->
+            <?php if ($svform['show']['telefono'] === '1') : ?>
             <div class="phno">
             <label class="phno"><?php echo JText::_('MOD_SVFORMULARIO_TELEPHONE'); ?></label>
             <input class="text" name="phno" type="text" value="<?php echo $phno; ?>" pattern="[0-9]{9}" <?php echo $estado; ?> />
             </div>
 			<?php endif; ?>
-           
-            <?php if($mostrarsubject=='1') : ?>
-			<!-- Presentacion de Subjecto -->
+			<!-- Presentacion de asunto -->
+            <?php if ($svform['show']['asunto'] === '1') : ?>
 			<div class="subject">
             <label class="subject"><?php echo JText::_('MOD_SVFORMULARIO_SUBJECT'); ?></label>
             <input class="text" name="subject" type="text" value="<?php echo $subject; ?>" <?php echo $estado; ?> />
             </div>
 			<?php endif; ?>
-
 			<!-- Presentacion de Mensaje -->
             <div class="msg">
             <label class="msg"><?php echo JText::_('MOD_SVFORMULARIO_MESSAGE'); ?></label>
             <textarea class="text" name="msg" <?php echo $estado; ?> ><?php echo $msg; ?></textarea>
             </div>
-
-			<?php if($mostrarselectlopd=='1') : ?>
 			<!-- Presentacion de Lopd -->
+            <?php if ($svform['show']['lopd'] === '1') : ?>
 				<div class="lopd">
                  <label class="lopd"><?php echo $textolopd; ?></label>
                 </div>
