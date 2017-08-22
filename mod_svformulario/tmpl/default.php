@@ -11,10 +11,10 @@
 * -------------------------------------------------------------------------*/
 
 defined('_JEXEC') or die('Restricted access');
-	echo '<pre>';
-	print_r ($module->title);
-	print_r($svform);
-	echo '</pre>';
+	//~ echo '<pre>';
+	//~ print_r ($module->title);
+	//~ print_r($svform);
+	//~ echo '</pre>';
 ?>
  <link rel="stylesheet" href="modules/mod_svformulario/tmpl/lib/svformulario.css" media="screen" />
   
@@ -58,8 +58,14 @@ defined('_JEXEC') or die('Restricted access');
 	
 
 ?>
+<style>
+.humano:before{
+	content:"<?php echo $varone;?>"}
+
+</style>
+
      <div id="Svformulario">
-		
+
 		<form name="Svformulario" id="form" method="post" action="<?php $_SERVER['PHP_SELF']?>" onsubmit="return validar(this)">
             <!-- Presentadicon de department -->
             <?php if ($svform['show']['departamentos'] === '1') : ?>
@@ -77,34 +83,34 @@ defined('_JEXEC') or die('Restricted access');
             <div class="name">
             <label class="name"><?php echo JText::_('MOD_SVFORMULARIO_NAME'); ?></label>
             
-            <input class="text" name="name" type="text" value="<?php echo $name; ?>" <?php echo ($svform['obligatorio']['nombre'] === '1') ? ' required' : ''; ?> />
+            <input class="text" name="name" type="text" value="" <?php echo ($svform['obligatorio']['nombre'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de email -->
             <?php if ($svform['show']['email'] === '1') : ?>
             <div class="email">
             <label class="email"><?php echo JText::_('MOD_SVFORMULARIO_EMAIL'); ?></label>
-            <input class="text" name="email" type="text" value="<?php echo $email; ?>" <?php echo ($svform['obligatorio']['email'] === '1') ? ' required' : ''; ?> />
+            <input class="text" name="email" type="text" value="" <?php echo ($svform['obligatorio']['email'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de telefono -->
             <?php if ($svform['show']['telefono'] === '1') : ?>
             <div class="phno">
             <label class="phno"><?php echo JText::_('MOD_SVFORMULARIO_TELEPHONE'); ?></label>
-            <input class="text" name="phno" type="text" value="<?php echo $phno; ?>" pattern="[0-9]{9}"<?php echo ($svform['obligatorio']['telefono'] === '1') ? 'required' : ''; ?> />
+            <input class="text" name="phno" type="text" value="" pattern="[0-9]{9}"<?php echo ($svform['obligatorio']['telefono'] === '1') ? 'required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de asunto -->
             <?php if ($svform['show']['asunto'] === '1') : ?>
 			<div class="subject">
             <label class="subject"><?php echo JText::_('MOD_SVFORMULARIO_SUBJECT'); ?></label>
-            <input class="text" name="subject" type="text" value="<?php echo $subject; ?>" <?php echo ($svform['obligatorio']['asunto'] === '1') ? ' required' : ''; ?> />
+            <input class="text" name="subject" type="text" value="" <?php echo ($svform['obligatorio']['asunto'] === '1') ? ' required' : ''; ?> />
             </div>
 			<?php endif; ?>
 			<!-- Presentacion de Mensaje -->
             <div class="msg">
             <label class="msg"><?php echo JText::_('MOD_SVFORMULARIO_MESSAGE'); ?></label>
-            <textarea class="text" name="msg" <?php echo $estado; ?> ><?php echo $msg; ?></textarea>
+            <textarea class="text" name="msg" required></textarea>
             </div>
 			<!-- Presentacion de Lopd -->
             <?php if ($svform['show']['lopd'] === '1') : ?>
@@ -126,7 +132,7 @@ defined('_JEXEC') or die('Restricted access');
 			<!-- Presentacion de Control de Spam -->
 			<div class="humantest">
 				<label for='message'><?php echo JText::_('MOD_SVFORMULARIO_HUMANTEST'); ?></label>
-				<?php echo '<b>'.$varone.'+'.$vartwo.'=</b>'; ?>
+				<?php echo '<b class="humano"> + '.$vartwo.' =</b>'; ?>
 				<input id="human_test" name="human_test" size="3" type="text" class="text">
 				<input type="hidden" id="sum_test" name="sum_test" value="<?php echo $sum_rand; ?>" />
 			</div>
@@ -134,7 +140,7 @@ defined('_JEXEC') or die('Restricted access');
             
             
             <div class ="enviar">
-                <input type="submit" name="submit" value="<?php echo JText::_('MOD_SVFORMULARIO_SUBMIT'); ?>" id="submit" <?php echo $estado; ?>/>
+                <input type="submit" name="submit" value="<?php echo JText::_('MOD_SVFORMULARIO_SUBMIT'); ?>" id="submit" />
            </div>
               
         </form>

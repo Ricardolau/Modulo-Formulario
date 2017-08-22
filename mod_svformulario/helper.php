@@ -33,6 +33,10 @@ class modSvformularioHelper
 			$resultado['to']['ventas']	=	$params->get( 'sales_address', 'info@solucionesvigo.es' );
 			$resultado['to']['ayuda']	=	$params->get( 'support_address', 'support@yourdomain.com' );
 			$resultado['to']['facturacion']	=	$params->get( 'billing_address', 'billing@yourdomain.com' );
+		} else {
+			// Si no muestra departamentos ponemos el primero por defecto.
+			$resultado['to']['ventas']	=	$params->get( 'sales_address', 'info@solucionesvigo.es' );
+
 		}
 		// Array [obligatorio] los que seleccionamos como obligatorios.
 		// Por defecto se pone show, ya si lo muestras por defecto es obligatorio, pero debería comprobar 
@@ -79,12 +83,28 @@ class modSvformularioHelper
 			
 			
 		    // El resto de campo los limpiamos de etiquetas y caracteres especiales.
-		    $department                 =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['dept']));
-            $name                       =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['name']));
-            $subject                    =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['subject']));
-            $msg                        =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '',strip_tags($_REQUEST['msg']));
+		    if (isset($_REQUEST['dept'])){
+				$departamento =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['dept']));
+			} else {
+				$departamento = '';
+			}
+			if (isset($_REQUEST['name'])){
+				$name =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['name']));
+			} else {
+				$name = '';
+			}
+			if (isset($_REQUEST['subject'])){
+				$subject  =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['subject']));
+			} else {
+				$subject = '';
+			}
+			if (isset($_REQUEST['msg'])){
+				$msg  =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '',strip_tags($_REQUEST['msg']));
+			} else {
+				$msg = '';
+			}
 			
-			// Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
+            // Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
 			switch (true) {
 				case ($obligatorio['nombre'] === '1'):
 					// Quiere decir que es obligatorio el nombre
@@ -119,7 +139,7 @@ class modSvformularioHelper
 			
 			if (!isset($resultado['error'])) {
 				// Creo array para devolver resultado ya que no hay errores
-				$resultado['mensaje'] = array('Svdepartment' => $department,
+				$resultado['mensaje'] = array('departamento' => $departamento,
 												'name'=> $name,
 												'email' => $email,
 												'phno' => $phno,
@@ -128,19 +148,21 @@ class modSvformularioHelper
 												);
 				// Aquí enviar el mensaje
 				switch (true) {
-					case ($department === 'sales') :
+					case ($departamento === 'sales') :
 						$resultado['to'][] = $to['ventas'];
 						break;
 					
-					case ($department === 'support') :
+					case ($departamento === 'support') :
 						$resultado['to'][] = $to['ayuda'];
 						break;
 					
-					case ($department === 'billing') :
+					case ($departamento === 'billing') :
 						$resultado['to'][] = $to['facturacion'];
 						break;
 						
-					
+					default :
+						$resultado['to'][] = $to['ventas']; // Valor por defecto.
+
 				}
 				// Añadimos email si marco enviarse copia a el mismo.
 				if ($show['copy'] === '1') {
@@ -192,17 +214,18 @@ class modSvformularioHelper
  
 	static function enviarEmail($datos,$to,$tituloMod) 
 	{
-       		// Montamos subjecto con nombre formulario y asunto puesto.
-       		$subject = $tituloMod.':'.$datos['subject'];
+       		
         	// Creamos distanatarios que puede ser un array
 			$destinatario = $to;
 			/* http://docs.joomla.org/Sending_email_from_extensions  */
         	// Antes de enviar tenemos que saber que hay email... 
         	$mail = JFactory::getMailer();
 			// Creamos el body del mensaje bien ...
-				$body = Jtext::_('MOD_SVFORMULARIO_NAME').':'.$name.'<br/>';
-				$body = $body.Jtext::_('MOD_SVFORMULARIO_TELEPHONE').':'.$phno.'<br/>';
-				$body = $body.$msg;
+				$body = '<b>'. Jtext::_('MOD_SVFORMULARIO_NAME').'</b>:'.$datos['name'].'<br/>';
+				$body = $body.'<b>'.Jtext::_('MOD_SVFORMULARIO_TELEPHONE').'</b>:'.$datos['phno'].'<br/>';
+				$body = $body.'<b>'.Jtext::_('MOD_SVFORMULARIO_EMAIL').'</b>:'.$datos['email'].'<br/>';
+
+				$body = $body.$datos['msg'];
 				
 				// Creo que para mandar por SMTP tengo añadir usuario y contraseña 
 				// Que la obtendo con ... 
@@ -210,9 +233,8 @@ class modSvformularioHelper
 				$mailfrom = $app->get('mailfrom');
 				$fromname = $app->get('fromname');
 				$sitename = $app->get('sitename');
-				// El subject ,es el que tenemos pero indicando el sitio tambien
-				
-				$subject = $sitename . $subject;
+				// Montamos subjecto con nombre formulario y asunto puesto.
+				$subject = 'Web:'.$sitename .' - Formulario:'. $tituloMod.' - '.$datos['subject'];
 				
 				// Ahora montamos el correo para enviarlos.
 				$mail->isHTML(true); // Indicamos que el body puede tener html
@@ -224,21 +246,21 @@ class modSvformularioHelper
 				
 				
 				// Envio de email
-				//~ $sent = $mail->Send();
-				//~ // Contestación de envio.
-				//~ if ( $sent !== true ) {
-					//~ /*echo '<pre>';
-					//~ print_r ($destinatario);
-					//~ echo '</pre>';*/
-					//~ echo Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					//~ 
-				//~ } else {
-					//~ $ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
-					//~ // Para añadir al array el resultado correcto.
-					//~ $resultado['resultado'] = $ok;
-				//~ }
+				$sent =& $mail->Send();
+				// Contestación de envio.
+				if ( $sent !== true ) {
+					/*echo '<pre>';
+					print_r ($destinatario);
+					echo '</pre>';*/
+					$Nok= Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
+					$resultado['NOk'] = $ok;
+
+				} else {
+					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
+					// Para añadir al array el resultado correcto.
+					$resultado['Ok'] = $ok;
+				}
 				
-			
 			
 		
 		return $resultado;
