@@ -105,35 +105,34 @@ class modSvformularioHelper
 			}
 			
             // Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
-			switch (true) {
-				case ($obligatorio['nombre'] === '1'):
+				if ($obligatorio['nombre'] === '1') {
 					// Quiere decir que es obligatorio el nombre
 					if ( strlen($name) === 0 ){
 						$resultado['error']['name'] = 'Error nombre';
 					}
-					break;
+				}
 				
-				case ($obligatorio['telefono'] === '1'):
+				if ($obligatorio['telefono'] === '1'){
 					// Quiere decir que es obligatorio el telefono
 					if ( strlen($phno) === 0 ){
 						$resultado['error']['phno'] = 'Error telefono';
 					}
-					break;
+				}
 				
-				case ($obligatorio['email'] === '1' ):
+				if ($obligatorio['email'] === '1' ) {
 					// Quiere decir que es obligatorio el email
 					if ( strlen($email) === 0 ){
 						$resultado['error']['email'] = 'Error email';
 					}
-					break;
+				}
 				
-				case ($obligatorio['asunto'] === '1'):
+				if ($obligatorio['asunto'] === '1'){
 					// Quiere decir que es obligatorio el asunto
 					if ( strlen($subject) === 0 ){
 						$resultado['error']['subject'] = 'Error asunto';
 					}
-					break;
-			}
+				}
+			
 			
 			
 			
@@ -253,7 +252,7 @@ class modSvformularioHelper
 					print_r ($destinatario);
 					echo '</pre>';*/
 					$Nok= Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					$resultado['NOk'] = $Nok;
+					$resultado['NOk'] = $ok;
 
 				} else {
 					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
