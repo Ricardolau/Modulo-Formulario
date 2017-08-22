@@ -89,7 +89,7 @@ class modSvformularioHelper
 				$departamento = '';
 			}
 			if (isset($_REQUEST['name'])){
-				$name =  preg_replace('([^\.,;:_ A-Za-z0-9-])', '', strip_tags($_REQUEST['name']));
+				$name =  preg_replace('([^ A-Za-z])', '', strip_tags($_REQUEST['name']));
 			} else {
 				$name = '';
 			}
@@ -192,7 +192,7 @@ class modSvformularioHelper
 				for ($i = 1; $i <= 5; $i++) {
 					if ($busqueda[$i] != false){
 					// Encontro palabra del filtro en contenido, se cancela todo.
-					$resultado = ' Filtro de palabra - '.$filtro;
+					$resultado = ' Palabra no admitida (Filtro) - '.$filtro;
 					break;
 					}
 				}

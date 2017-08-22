@@ -17,8 +17,7 @@ $params->def('greeting', 1);
     $layout           = $params->get('layout', 'default');
 
     if ($_POST) {
-		// Cambiamos de layout
-		$layout .= '_respuesta';
+		
 		// Cargamos valore de enviados.
 		
 		$datos= modSvformularioHelper::obtenerDatos($svform['show'],$svform['obligatorio'],$svform['to']);
@@ -34,8 +33,13 @@ $params->def('greeting', 1);
 			if ($res_filtro === 'Correcto') {
 			// Quiere decir que es todo correcto, por lo que enviamos.
 			$res_envio = modSvformularioHelper::enviarEmail($datos['mensaje'],$svform['to'],$module->title);
-			}
-		}		
+			// Cambiamos de layout
+			$layout .= '_resp_envio';	
+			} 
+		}	else {
+			// No se envio por lo que informamos 
+			$layout .= '_respuesta';
+		}	
 		
 	}
 	require JModuleHelper::getLayoutPath('mod_svformulario', $layout);

@@ -13,25 +13,25 @@
 defined('_JEXEC') or die('Restricted access');
 	
 	
-	
-?>
-<div id="Svformulario">
- <p><?php 
-	echo ' <h1> Hubo un error , no se envio</h1>';
-	echo '<pre>';
+	//~ echo '<pre>';
 	//~ print_r($svform);
-	echo 'Respuesta de filtro:<br/>';
-	print_r($res_filtro);
-	echo '<br/>';
-	//~ echo 'Datos a enviar :<br/>';
+	//~ echo 'Respuesta de filtro:<br/>';
+	//~ print_r($res_filtro);
+	//~ echo '<br/>';
 	//~ print_r($datos);
 	//~ echo 'Respuesta Envio:<br/>';
 	//~ if (isset($res_envio)){
 	//~ print_r($res_envio);
 	//~ }
-	echo '</pre>';
-	
-	?>
+	//~ echo '</pre>';
+?>
+<div id="Svformulario">
+ <p><?php 
+	if (isset($res_envio['Ok'])){
+		echo $res_envio['Ok'];
+	} else {
+		echo $res_envio['NOk'];
+	}?>
 </p>
 
 </div>
