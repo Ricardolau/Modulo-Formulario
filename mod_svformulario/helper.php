@@ -205,7 +205,7 @@ class modSvformularioHelper
 			}
 		}
 		if ($resultado === ''){
-			$resultado['res'] = 'Correcto';
+			$resultado = 'Correcto';
 			
 		}
 		return $resultado;
