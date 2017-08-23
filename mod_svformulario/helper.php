@@ -132,10 +132,7 @@ class modSvformularioHelper
 						$resultado['error']['subject'] = 'Error asunto';
 					}
 				}
-			
-			
-			
-			
+
 			if (!isset($resultado['error'])) {
 				// Creo array para devolver resultado ya que no hay errores
 				$resultado['mensaje'] = array('departamento' => $departamento,
@@ -183,24 +180,18 @@ class modSvformularioHelper
 		if (count($filtros) >0 ) {
 			foreach ($filtros as $filtro) {
 				// Buscamos posicion posible filtro .. pero si esta vacia ya ponemos false para evitar warning
-				$busqueda[1] = (empty($datos['name'])) ? false : strpos($datos['name'], $filtro);
-				$busqueda[2] = (empty($datos['email'])) ? false : strpos($datos['email'], $filtro);
-				$busqueda[3] = (empty($datos['phno'])) ? false : strpos($datos['phno'], $filtro);
-				$busqueda[4] = (empty($datos['msg'])) ? false : strpos($datos['msg'], $filtro);
-				$busqueda[5] = (empty($datos['subject'])) ? false :strpos($datos['subject'], $filtro);
-				for ($i = 1; $i <= 5; $i++) {
-					if ($busqueda[$i] != false){
+				$busqueda[] = (empty($datos['name'])) ? false : strpos($datos['name'], $filtro);
+				$busqueda[] = (empty($datos['email'])) ? false : strpos($datos['email'], $filtro);
+				$busqueda[] = (empty($datos['phno'])) ? false : strpos($datos['phno'], $filtro);
+				$busqueda[] = (empty($datos['msg'])) ? false : strpos($datos['msg'], $filtro);
+				$busqueda[] = (empty($datos['subject'])) ? false : strpos($datos['subject'], $filtro);
+				for ($i = 0; $i < count($busqueda); $i++) {
+					if ($busqueda[$i] !== false){
 					// Encontro palabra del filtro en contenido, se cancela todo.
 					$resultado = ' Palabra no admitida (Filtro) - '.$filtro;
-					break;
+					break 2;
 					}
 				}
-				if ($resultado !=''){
-					// No continuo buscando, devuelvo error.
-					break;
-				}
-				// Si tiene numero es que entro, si es false es que no lo encontro..
-				
 			}
 		}
 		if ($resultado === ''){
@@ -263,7 +254,20 @@ class modSvformularioHelper
 			
 		
 		return $resultado;
-    }
+	}
+
+	static function consigueLayout ($datos, $filtrado) {
+		$result = '';
+
+		if (isset( $datos['error']) or ($filtrado != 'Correcto')) {
+			$result .= '_respuesta';
+			return $result;
+		}
+		if ($filtrado === 'Correcto') {
+			$result .= '_resp_envio';
+			return $result;
+		}
+	}
 }
 
 
