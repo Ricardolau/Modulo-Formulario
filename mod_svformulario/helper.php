@@ -1,13 +1,10 @@
 <?php
 
 /*------------------------------------------------------------------------
-# J DContact
-# ------------------------------------------------------------------------
-# author                Md. Shaon Bahadur
-# copyright             Copyright (C) 2013 j-download.com. All Rights Reserved.
+# author                Ricardo Carpintero
 # @license -            http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
-# Websites:             http://www.j-download.com
-# Technical Support:    http://www.j-download.com/request-for-quotation.html
+# Websites ayuda:       http://ayuda.svigo.es
+# Email ayuda:  		info@solucionesvigo.es
 -------------------------------------------------------------------------*/
 
 defined('_JEXEC') or die;
@@ -39,7 +36,7 @@ class modSvformularioHelper
 
 		}
 		// Array [obligatorio] los que seleccionamos como obligatorios.
-		// Por defecto se pone show, ya si lo muestras por defecto es obligatorio, pero debería comprobar 
+		// Por defecto se pone show, ya si lo muestras por defecto es obligatorio, pero debería comprobar
 		// que no sea obligatorio un campo que no se muestra.. ya que es incoherente.
 		$resultado['obligatorio']['nombre'] = ($resultado['show']['nombre'] === '1') ? $params->get( 'Ob_nombre', $resultado['show']['nombre'] ) : '0';
 		$resultado['obligatorio']['telefono'] = ($resultado['show']['telefono'] === '1') ? $params->get( 'Ob_telephone', $resultado['show']['telefono'] ) : '0';
@@ -53,7 +50,7 @@ class modSvformularioHelper
 			// Tengo que obtener texto que puso en parametros o los textos por defectos de idiomas... según..
 			$resultado['textos']['lopd'] = $params->get( 'lopd');
 		}
-		
+
 		return $resultado;
 	}
 	static function obtenerDatos($show,$obligatorio,$to)
@@ -76,12 +73,12 @@ class modSvformularioHelper
 				if(preg_match($exp_email, mb_strtolower($_REQUEST['email'])))
 				{ // Si es correcto email
 					$email= trim($_REQUEST['email']);
-				} 
+				}
 			} else {
 					$email = '';
 			}
-			
-			
+
+
 		    // El resto de campo los limpiamos de etiquetas y caracteres especiales.
 		    if (isset($_REQUEST['dept'])){
 				$departamento =  preg_replace('([^A-Za-z0-9])', '', strip_tags($_REQUEST['dept']));
@@ -103,7 +100,7 @@ class modSvformularioHelper
 			} else {
 				$msg = '';
 			}
-			
+
             // Los posibles errores que vamos mostrar es ( debería crear parametro de si es obligatorio o no el campo)
 				if ($obligatorio['nombre'] === '1') {
 					// Quiere decir que es obligatorio el nombre
@@ -111,21 +108,21 @@ class modSvformularioHelper
 						$resultado['error']['name'] = 'Error nombre';
 					}
 				}
-				
+
 				if ($obligatorio['telefono'] === '1'){
 					// Quiere decir que es obligatorio el telefono
 					if ( strlen($phno) === 0 ){
 						$resultado['error']['phno'] = 'Error telefono';
 					}
 				}
-				
+
 				if ($obligatorio['email'] === '1' ) {
 					// Quiere decir que es obligatorio el email
 					if ( strlen($email) === 0 ){
 						$resultado['error']['email'] = 'Error email';
 					}
 				}
-				
+
 				if ($obligatorio['asunto'] === '1'){
 					// Quiere decir que es obligatorio el asunto
 					if ( strlen($subject) === 0 ){
@@ -140,22 +137,22 @@ class modSvformularioHelper
 												'email' => $email,
 												'phno' => $phno,
 												'subject' => $subject,
-												'msg' => $msg								
+												'msg' => $msg
 												);
-				// Aquí enviar el mensaje
+				// A quien enviar el mensaje
 				switch (true) {
 					case ($departamento === 'sales') :
 						$resultado['to'][] = $to['ventas'];
 						break;
-					
+
 					case ($departamento === 'support') :
 						$resultado['to'][] = $to['ayuda'];
 						break;
-					
+
 					case ($departamento === 'billing') :
 						$resultado['to'][] = $to['facturacion'];
 						break;
-						
+
 					default :
 						$resultado['to'][] = $to['ventas']; // Valor por defecto.
 
@@ -166,13 +163,13 @@ class modSvformularioHelper
 						//~ $resultado['envio'] = 'Algo';
 						if (isset($_REQUEST['selfcopy'])){
 						$resultado['to'][] = $email;
-						} 
+						}
 				}
 			}
-			
+
 			return $resultado;
-	}	 
- 
+	}
+
 	static function aplicarFiltros($datos,$filtros) {
 		// Aplicamos filtros.
 		$resultado = '';
@@ -196,19 +193,19 @@ class modSvformularioHelper
 		}
 		if ($resultado === ''){
 			$resultado = 'Correcto';
-			
+
 		}
 		return $resultado;
 	}
- 
- 
-	static function enviarEmail($datos,$to,$tituloMod) 
+
+
+	static function enviarEmail($datos,$to,$tituloMod)
 	{
-       		
+
         	// Creamos distanatarios que puede ser un array
 			$destinatario = $to;
 			/* http://docs.joomla.org/Sending_email_from_extensions  */
-        	// Antes de enviar tenemos que saber que hay email... 
+        	// Antes de enviar tenemos que saber que hay email...
         	$mail = JFactory::getMailer();
 			// Creamos el body del mensaje bien ...
 				$body = '<b>'. Jtext::_('MOD_SVFORMULARIO_NAME').'</b>:'.$datos['name'].'<br/>';
@@ -216,16 +213,16 @@ class modSvformularioHelper
 				$body = $body.'<b>'.Jtext::_('MOD_SVFORMULARIO_EMAIL').'</b>:'.$datos['email'].'<br/>';
 
 				$body = $body.$datos['msg'];
-				
-				// Creo que para mandar por SMTP tengo añadir usuario y contraseña 
-				// Que la obtendo con ... 
+
+				// Creo que para mandar por SMTP tengo añadir usuario y contraseña
+				// Que la obtendo con ...
 				$app = JFactory::getApplication();
 				$mailfrom = $app->get('mailfrom');
 				$fromname = $app->get('fromname');
 				$sitename = $app->get('sitename');
 				// Montamos subjecto con nombre formulario y asunto puesto.
 				$subject = 'Web:'.$sitename .' - Formulario:'. $tituloMod.' - '.$datos['subject'];
-				
+
 				// Ahora montamos el correo para enviarlos.
 				$mail->isHTML(true); // Indicamos que el body puede tener html
 				$mail->addRecipient($destinatario);
@@ -233,8 +230,8 @@ class modSvformularioHelper
 				$mail->setSender(array($mailfrom, $fromname));
 				$mail->setSubject($subject);
 				$mail->setBody($body);
-				
-				
+
+
 				// Envio de email
 				$sent =& $mail->Send();
 				// Contestación de envio.
@@ -250,9 +247,9 @@ class modSvformularioHelper
 					// Para añadir al array el resultado correcto.
 					$resultado['Ok'] = $ok;
 				}
-				
-			
-		
+
+
+
 		return $resultado;
 	}
 

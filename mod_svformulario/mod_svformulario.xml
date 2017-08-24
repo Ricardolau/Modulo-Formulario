@@ -23,204 +23,204 @@
 	</files>
 	<languages folder="language">
 		<language tag="es-ES">es-ES/es-ES.mod_svformulario.ini</language>
-		<language tag="es-ES">es-ES/es-ES.mod_svformulario.sys.ini</language> 
+		<language tag="es-ES">es-ES/es-ES.mod_svformulario.sys.ini</language>
 		<language tag="en-GB">en-GB/en-GB.mod_svformulario.ini</language>
-		<language tag="en-GB">en-GB/en-GB.mod_svformulario.sys.ini</language> 
+		<language tag="en-GB">en-GB/en-GB.mod_svformulario.sys.ini</language>
 		<language tag="gl-ES">gl-ES/gl-ES.mod_svformulario.ini</language>
-		<language tag="gl-ES">gl-ES/gl-ES.mod_svformulario.sys.ini</language> 
+		<language tag="gl-ES">gl-ES/gl-ES.mod_svformulario.sys.ini</language>
     </languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_LOGIN" />
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field 
-				name="nombre" 
-				type="radio" 
+				<field
+				name="nombre"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LNAME" 
+				default="1"
+				label="MOD_SVFORMULARIO_LNAME"
 				description="MOD_SVFORMULARIO_DNAME">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				<field 
-				name="email" 
-				type="radio" 
+				<field
+				name="email"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LEMAIL" 
+				default="1"
+				label="MOD_SVFORMULARIO_LEMAIL"
 				description="MOD_SVFORMULARIO_DEMAIL">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="telephone" 
-				type="radio" 
+
+				<field
+				name="telephone"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LTELEPHONE" 
+				default="1"
+				label="MOD_SVFORMULARIO_LTELEPHONE"
 				description="MOD_SVFORMULARIO_DTELEPHONE">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="subject" 
-				type="radio" 
+
+				<field
+				name="subject"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LSUBJECT" 
+				default="1"
+				label="MOD_SVFORMULARIO_LSUBJECT"
 				description="MOD_SVFORMULARIO_DSUBJECT">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-								
-				<field 
-				name="showdepartment" 
-				type="radio" 
+
+				<field
+				name="showdepartment"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LDEPARTMENT" 
+				default="1"
+				label="MOD_SVFORMULARIO_LDEPARTMENT"
 				description="MOD_SVFORMULARIO_DDEPARTMENT">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-								
-				<field 
+
+				<field
 				name="sales_address"
-				type="text" 
+				type="text"
 				default="sales@yourdomain.com"
-				size="50" 
-				label="MOD_SVFORMULARIO_LSALES" 
+				size="50"
+				label="MOD_SVFORMULARIO_LSALES"
 				description="MOD_SVFORMULARIO_DSALES" />
-				
-				<field 
-				name="support_address" 
-				type="text" 
-				default="support@yourdomain.com" 
-				size="50" 
-				label="MOD_SVFORMULARIO_LSUPPORT" 
+
+				<field
+				name="support_address"
+				type="text"
+				default="support@yourdomain.com"
+				size="50"
+				label="MOD_SVFORMULARIO_LSUPPORT"
 				description="MOD_SVFORMULARIO_DSUPPORT" />
-            
-				<field 
-				name="billing_address" 
-				type="text" 
-				default="facturacion@yourdomain.com" 
-				size="50" 
-				label="MOD_SVFORMULARIO_LBILLING" 
+
+				<field
+				name="billing_address"
+				type="text"
+				default="facturacion@yourdomain.com"
+				size="50"
+				label="MOD_SVFORMULARIO_LBILLING"
 				description="MOD_SVFORMULARIO_DBILLING"/>
-		    
-				
-				<field 
-				name="showsendcopy" 
-				type="radio" 
+
+
+				<field
+				name="showsendcopy"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LSELFCOPY" 
+				default="1"
+				label="MOD_SVFORMULARIO_LSELFCOPY"
 				description="MOD_SVFORMULARIO_LSELFCOPY">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="humantestpram" 
-				type="radio" 
+
+				<field
+				name="humantestpram"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LHUMANTEST" 
+				default="1"
+				label="MOD_SVFORMULARIO_LHUMANTEST"
 				description="MOD_SVFORMULARIO_DHUMANTEST">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="selectlopd" 
-				type="radio" 
+
+				<field
+				name="selectlopd"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LSELECTLOPD" 
+				default="1"
+				label="MOD_SVFORMULARIO_LSELECTLOPD"
 				description="MOD_SVFORMULARIO_DSLELECTLOPD">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="lopd" 
-				type="textarea" 
+
+				<field
+				name="lopd"
+				type="textarea"
 				default="Sus datos personales serán incorporados a un fichero titularidad de NOMBRE EMPRESA con la finalidad de gestionar su propuesta. Usted puede ejercitar sus derechos de acceso, rectificación, cancelación y oposición dirigiéndose a NOMBRE EMPRESA Y DIRECCIÓN o enviando un email a la dirección info@suweb.com"
-				label="MOD_SVFORMULARIO_LLOPD" 
+				label="MOD_SVFORMULARIO_LLOPD"
 				description="MOD_SVFORMULARIO_DLOPD"/>
-				
-				
+
+
 
 			</fieldset>
 			<fieldset name="CamposObligatorios">
-				<field 
-				name="Ob_nombre" 
-				type="radio" 
+				<field
+				name="Ob_nombre"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_OB_LNAME" 
+				default="1"
+				label="MOD_SVFORMULARIO_OB_LNAME"
 				description="MOD_SVFORMULARIO_OB_DNAME">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="Ob_telephone" 
-				type="radio" 
+
+				<field
+				name="Ob_telephone"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_OB_LTELEPHONE" 
+				default="1"
+				label="MOD_SVFORMULARIO_OB_LTELEPHONE"
 				description="MOD_SVFORMULARIO_OB_DTELEPHONE">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				<field 
-				name="Ob_email" 
-				type="radio" 
+				<field
+				name="Ob_email"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_OB_LEMAIL" 
+				default="1"
+				label="MOD_SVFORMULARIO_OB_LEMAIL"
 				description="MOD_SVFORMULARIO_OB_DEMAIL">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				
-				<field 
-				name="Ob_subject" 
-				type="radio" 
+
+				<field
+				name="Ob_subject"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_OB_LSUBJECT" 
+				default="1"
+				label="MOD_SVFORMULARIO_OB_LSUBJECT"
 				description="MOD_SVFORMULARIO_OB_DSUBJECT">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-								
-				
+
+
 			</fieldset>
-			
+
 			<fieldset name="FiltrosEnvios">
-				<field 
-				name="filtroActivos" 
-				type="radio" 
+				<field
+				name="filtroActivos"
+				type="radio"
 				class="btn-group btn-group-yesno"
-				default="1" 
-				label="MOD_SVFORMULARIO_LFILTROS" 
+				default="1"
+				label="MOD_SVFORMULARIO_LFILTROS"
 				description="MOD_SVFORMULARIO_DFILTROS">
 			    <option value="1">JYES</option>
 			    <option value="0">JNO</option>
 				</field>
-				<field 
-				name="filtroGeneral" 
-				type="textarea" 
+				<field
+				name="filtroGeneral"
+				type="textarea"
 				default=""
-				label="MOD_SVFORMULARIO_LFILTROGENERAL" 
+				label="MOD_SVFORMULARIO_LFILTROGENERAL"
 				description="MOD_SVFORMULARIO_DFILTROGENERAL"/>
-				
-			
+
+
 			</fieldset>
 
 			<fieldset
