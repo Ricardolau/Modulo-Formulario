@@ -26,7 +26,7 @@ if ($_POST) {
 		$res_filtro = modSvformularioHelper::aplicarFiltros($datos['mensaje'] ,$svform['filtros']);
 	}
 
-	if ($res_filtro === 'Correcto') {
+	if (($res_filtro === 'Correcto') and (!isset( $datos['error']))){
 		// Quiere decir que es todo correcto, por lo que enviamos.
 		$res_envio = modSvformularioHelper::enviarEmail($datos['mensaje'],$svform['to'],$module->title);
 	}

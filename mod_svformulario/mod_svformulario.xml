@@ -11,7 +11,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>info@solucionesvigo.es</authorEmail>
 	<authorUrl>www.solucionesvigo.es</authorUrl>
-	<version>0.1.2</version>
+	<version>0.1.3</version>
 	<description>MOD_SVFORMULARIO_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_svformulario">mod_svformulario.php</filename>
