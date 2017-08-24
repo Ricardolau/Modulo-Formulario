@@ -1,10 +1,40 @@
+Modulo Formulario Joomla ( Soluciones Vigo )
+Un modulo tiene los siguientes campos:
+- Nombre
+- Telefono
+- Departamentos ( Donde puede indicar a que departamentos vas enviar la consulta formulario : ayuda,venta,facturacion)
+- Lopd -> solo texto
+- captcha -> muestra un pregunta de suma de dos numeros.
+- Check de renvio -> Un Check de reenvio de formulario al email que indique. [ Pendiente controlar esto ]
+
+Ademas el formulario permite seleccionar:
+- Si se activa (muestra) cada campo o no
+- Si es obligatorio o no cada campo.
+- Si se activa filtro de palabra ( anti-spam) 
+
+La palabras del filtro tiene que estar separadas por punto y coma (;)
+
+
+
+
+Creditos del programa
+
 Inicialment este modulo era copia del modulo jdcontact, que lo descargamos de :
 <authorEmail>info@j-download.com</authorEmail>
 <authorUrl>www.j-download.com</authorUrl>
 <version>1.0.4</version>
 Necesitabamos unos cambios.
 
-Poco a poco esos cambios fueron creciendo y en estos momentos ya es un modulo totalmente nuevo y distinto a jdcontact.
+Poco a poco esos cambios fueron creciendo y en estos momentos ya es un modulo totalmente nuevo y distinto a jdcontact ( eso creo, ya que no tengo la version nueva).. . :-)
+
+En este modulo participo:
+
+- Olalla Cruz (traductora)
+- Guillermo Cordeiro ( solucionador de problemillas )
+- Ricardo Carpintero ( pringado).
+
+
+
 
 
 
