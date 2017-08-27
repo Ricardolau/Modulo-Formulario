@@ -240,7 +240,7 @@ class modSvformularioHelper
 					print_r ($destinatario);
 					echo '</pre>';*/
 					$Nok= Jtext::_('MOD_SVFORMULARIO_MAILSERVPROB').':'. $sent->__toString();
-					$resultado['NOk'] = $ok;
+					$resultado['NOk'] = $Nok;
 
 				} else {
 					$ok= Jtext::_('MOD_SVFORMULARIO_SUCCESSMSG');
