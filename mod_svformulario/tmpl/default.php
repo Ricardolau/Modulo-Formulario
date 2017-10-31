@@ -66,7 +66,7 @@ defined('_JEXEC') or die('Restricted access');
 
      <div id="Svformulario">
 
-		<form name="Svformulario" id="form" method="post" action="<?php $_SERVER['PHP_SELF']?>" onsubmit="return validar(this)">
+		<form name="Svformulario" id="form" method="post" action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" onsubmit="return validar(this)">
             <!-- Presentadicon de department -->
             <?php if ($svform['show']['departamentos'] === '1') : ?>
               <div class="department">
